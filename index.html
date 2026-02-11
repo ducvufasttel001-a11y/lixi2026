@@ -3,270 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lì Xì Năm Ngựa 2026</title>
+    <title>Lì Xì & Xin Xăm 2026</title>
     <style>
-        /* --- CẤU HÌNH CHUNG --- */
+        /* --- CẤU HÌNH CƠ BẢN --- */
         body {
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(circle, #b71c1c, #6a040f);
+            margin: 0; padding: 0;
+            background: radial-gradient(circle, #800000, #300000);
             font-family: 'Arial', sans-serif;
             color: #fff;
-            overflow: hidden; /* Chặn cuộn trang */
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            user-select: none; /* Chặn bôi đen chữ */
+            overflow: hidden;
+            height: 100vh; width: 100vw;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* --- TIÊU ĐỀ --- */
-        h1 {
-            text-shadow: 2px 2px 4px #000;
-            color: #ffd700;
-            z-index: 10;
-            text-align: center;
-            text-transform: uppercase;
-            animation: glow 2s ease-in-out infinite alternate;
-            margin: 0 0 20px 0;
-            line-height: 1.2;
+        /* --- MENU CHUYỂN TAB --- */
+        .nav-bar {
+            margin-top: 15px;
+            z-index: 100;
+            display: flex; gap: 10px;
+        }
+        .nav-btn {
+            padding: 10px 20px;
+            border: 2px solid #ffd700;
+            background: #b71c1c;
+            color: #fff;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .nav-btn.active {
+            background: #ffd700; color: #b71c1c;
+            box-shadow: 0 0 10px #ffd700;
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #fff, 0 0 20px #ffd700; }
-            to { text-shadow: 0 0 20px #ff00de, 0 0 30px #ff00de; }
-        }
-
-        /* --- CÂU ĐỐI (Chỉ hiện trên PC/Tablet to) --- */
-        .couplet-container {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 5;
+        /* --- KHUNG CHỨA NỘI DUNG --- */
+        .content-area {
+            position: relative;
+            flex: 1; width: 100%;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 50;
         }
         
-        .couplet-left { left: 5%; }
-        .couplet-right { right: 5%; }
+        .tab { display: none; flex-direction: column; align-items: center; width: 100%; }
+        .tab.show { display: flex; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .couplet {
-            background: #d32f2f;
-            border: 2px solid #ffd700;
-            color: #ffd700;
-            padding: 15px 10px;
-            font-weight: bold;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
-            font-family: 'Times New Roman', serif;
-            /* Cấu hình chữ chạy dọc chuẩn */
-            writing-mode: vertical-rl; 
-            text-orientation: upright;
-            letter-spacing: 5px;
-            white-space: nowrap; /* Cấm xuống dòng lung tung */
+        h1 {
+            color: #ffd700; text-shadow: 2px 2px 4px #000;
+            margin-bottom: 20px; text-align: center; text-transform: uppercase;
         }
 
-        .horse-guard {
-            margin-bottom: 10px;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
-        }
-
-        /* --- VÒNG QUAY (Responsive) --- */
-        .wheel-container {
-            position: relative;
-            z-index: 10;
-            /* Mặc định cho PC */
-            width: 350px;
-            height: 350px;
-            transition: all 0.3s ease;
-        }
-
+        /* --- VÒNG QUAY --- */
+        .wheel-wrap { position: relative; width: 320px; height: 320px; }
         .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 8px solid #ffd700;
+            width: 100%; height: 100%; border-radius: 50%; border: 8px solid #ffd700;
             box-sizing: border-box;
             background: conic-gradient(
-                #b71c1c 0% 12.5%, #ffc107 12.5% 25%, 
-                #b71c1c 25% 37.5%, #ffc107 37.5% 50%, 
-                #b71c1c 50% 62.5%, #ffc107 62.5% 75%, 
-                #b71c1c 75% 87.5%, #ffc107 87.5% 100%
+                #d32f2f 0% 12.5%, #ffeb3b 12.5% 25%, 
+                #d32f2f 25% 37.5%, #ffeb3b 37.5% 50%, 
+                #d32f2f 50% 62.5%, #ffeb3b 62.5% 75%, 
+                #d32f2f 75% 87.5%, #ffeb3b 87.5% 100%
             );
             transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
         }
-
         .pointer {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; 
-            height: 0; 
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 40px solid #fff;
-            z-index: 20;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+            position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+            border-left: 20px solid transparent; border-right: 20px solid transparent;
+            border-top: 40px solid #fff; z-index: 20;
         }
-
         .spin-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20%; /* Tự co giãn theo vòng quay */
-            height: 20%;
-            background: radial-gradient(circle, #fff, #ddd);
-            border-radius: 50%;
-            border: 4px solid #c62828;
-            color: #c62828;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 20;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 70px; height: 70px; background: #fff; border-radius: 50%;
+            border: 4px solid #d32f2f; color: #d32f2f; font-weight: bold; cursor: pointer; z-index: 30;
         }
-        
-        .spin-btn:active { transform: translate(-50%, -50%) scale(0.95); }
 
-        /* --- NGỰA CHẠY --- */
+        /* --- ỐNG XĂM --- */
+        .tube-container {
+            position: relative; width: 120px; height: 200px;
+            background: #795548; border: 4px solid #ffd700;
+            border-radius: 10px 10px 50px 50px; margin-bottom: 30px;
+            display: flex; justify-content: center;
+        }
+        .tube-label {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 40px; color: #ffd700; font-weight: bold;
+            border: 2px solid #ffd700; border-radius: 50%; padding: 5px;
+        }
+        .shaking { animation: shake 0.5s infinite; }
+        @keyframes shake {
+            0% { transform: rotate(0deg); } 25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); } 75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .shake-btn {
+            padding: 15px 40px; background: #ffeb3b; color: #d32f2f;
+            border: none; border-radius: 30px; font-size: 20px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 5px #f57f17;
+        }
+        .shake-btn:active { transform: translateY(4px); box-shadow: none; }
+
+        /* --- POPUP --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 200;
+            justify-content: center; align-items: center;
+        }
+        .modal-box {
+            background: #fff; width: 90%; max-width: 350px; padding: 20px;
+            border-radius: 15px; text-align: center; border: 4px solid #ffd700;
+        }
+        .modal-title { font-size: 22px; color: #d32f2f; margin: 0 0 10px 0; font-weight: bold; }
+        .modal-result { font-size: 28px; color: #ff6f00; font-weight: bold; margin: 10px 0; }
+        .modal-desc { color: #333; font-style: italic; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
+        .close-btn {
+            background: #d32f2f; color: #fff; padding: 10px 30px;
+            border: none; border-radius: 20px; cursor: pointer; font-size: 16px;
+        }
+
+        /* --- BACKGROUND & HIỆU ỨNG --- */
         .running-track {
-            position: absolute;
-            bottom: 5vh; /* Cách đáy 5% chiều cao màn hình */
-            left: 0;
-            width: 100%;
-            height: 60px;
-            z-index: 2;
-            pointer-events: none;
+            position: fixed; bottom: 0; left: 0;
+            width: 100%; height: 60px; z-index: 1; pointer-events: none;
         }
-        .horse-runner, .horse-runner-2 {
-            position: absolute;
-            bottom: 0;
+        .horse-runner {
+            position: absolute; bottom: 5px; font-size: 40px;
+            animation: runAcross 8s linear infinite;
         }
-        .horse-runner { animation: runAcross 8s linear infinite; }
-        .horse-runner-2 { animation: runAcross 10s linear infinite; animation-delay: 2s; opacity: 0.8; }
-
+        .horse-runner-2 {
+            position: absolute; bottom: 10px; font-size: 35px; opacity: 0.8;
+            animation: runAcross 10s linear infinite; animation-delay: 2s;
+        }
         @keyframes runAcross {
-            0% { left: -15%; transform: scaleX(1); }
-            49% { left: 115%; transform: scaleX(1); }
-            50% { left: 115%; transform: scaleX(-1); } 
-            100% { left: -15%; transform: scaleX(-1); }
+            0% { left: -10%; transform: scaleX(1); }
+            50% { left: 110%; transform: scaleX(1); }
+            51% { left: 110%; transform: scaleX(-1); }
+            100% { left: -10%; transform: scaleX(-1); }
         }
 
-        /* --- HIỆU ỨNG RƠI --- */
         .falling-item {
-            position: absolute;
-            top: -10%;
-            user-select: none;
-            z-index: 1;
-            animation: fall linear infinite;
+            position: absolute; top: -10%; z-index: 1;
+            animation: fall linear infinite; pointer-events: none;
         }
         @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
-
-        /* --- POPUP KẾT QUẢ --- */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-        .modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            border: 4px solid #ffd700;
-            width: 90%;
-            max-width: 350px;
-            animation: popIn 0.4s ease-out;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
-        }
-        .prize-text { font-size: 2.5rem; font-weight: bold; margin: 15px 0; color: #d32f2f; }
-        .wish-text { font-size: 1.1rem; font-style: italic; color: #555; margin-bottom: 25px; line-height: 1.4; }
-        .close-btn {
-            padding: 12px 30px;
-            background: #c62828;
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        @keyframes popIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* =========================================
-           TỐI ƯU CHO MOBILE (Màn hình nhỏ hơn 768px)
-           ========================================= */
-        @media (max-width: 768px) {
-            /* 1. Tiêu đề nhỏ lại chút */
-            h1 { font-size: 1.5rem; margin-top: 10px; }
-
-            /* 2. Ẩn câu đối để đỡ chật màn hình */
-            .couplet-container { display: none; }
-
-            /* 3. Vòng quay to ra theo chiều rộng điện thoại (85%) */
-            .wheel-container {
-                width: 85vw;
-                height: 85vw;
-                max-width: 350px;
-                max-height: 350px;
-            }
-
-            /* 4. Ngựa chạy nhỏ lại để không che nút */
-            .horse-runner, .horse-runner-2 { font-size: 30px; }
-            
-            /* 5. Nút quay chữ nhỏ hơn xíu */
-            .spin-btn { font-size: 1rem; }
-        }
-
-        /* =========================================
-           TỐI ƯU CHO PC (Màn hình lớn hơn 769px)
-           ========================================= */
-        @media (min-width: 769px) {
-            h1 { font-size: 2.5rem; }
-            .couplet { font-size: 2rem; }
-            .horse-guard { font-size: 3rem; }
-            .horse-runner, .horse-runner-2 { font-size: 45px; }
-        }
+        
+        @media (max-width: 600px) { .wheel-wrap { width: 280px; height: 280px; } }
     </style>
 </head>
 <body>
 
-    <h1>🐎 TẾT BÍNH NGỌ 2026 🐎</h1>
-
-    <div class="couplet-container couplet-left">
-        <div class="horse-guard">🐴</div>
-        <div class="couplet">MÃ ĐÁO THÀNH CÔNG</div>
-    </div>
-    <div class="couplet-container couplet-right">
-        <div class="horse-guard">🦄</div>
-        <div class="couplet">TẤN TÀI TẤN LỘC</div>
+    <div class="nav-bar">
+        <button id="btn-wheel" class="nav-btn active" onclick="openTab('wheel')">Vòng Quay</button>
+        <button id="btn-fortune" class="nav-btn" onclick="openTab('fortune')">Gieo Quẻ</button>
     </div>
 
-    <div class="wheel-container">
-        <div class="pointer"></div>
-        <div class="wheel" id="wheel"></div>
-        <button class="spin-btn" onclick="spinWheel()">QUAY</button>
+    <div class="content-area">
+        <div id="tab-wheel" class="tab show">
+            <h1>🧧 Lì Xì 2026 🧧</h1>
+            <div class="wheel-wrap">
+                <div class="pointer"></div>
+                <div class="wheel" id="wheelElement"></div>
+                <button class="spin-btn" onclick="startSpin()">QUAY</button>
+            </div>
+        </div>
+
+        <div id="tab-fortune" class="tab">
+            <h1>🎋 Xin Xăm 🎋</h1>
+            <div class="tube-container" id="tubeElement">
+                <div class="tube-label">LỘC</div>
+            </div>
+            <button class="shake-btn" onclick="startShake()">LẮC QUẺ</button>
+        </div>
     </div>
 
     <div class="running-track">
@@ -274,80 +183,103 @@
         <div class="horse-runner-2">🐎</div>
     </div>
 
-    <div class="modal" id="resultModal">
-        <div class="modal-content">
-            <h2 style="margin:0; color:#c62828;">🎉 CHÚC MỪNG 🎉</h2>
-            <div id="prizeResult" class="prize-text"></div>
-            <div id="wishResult" class="wish-text"></div>
-            <button class="close-btn" onclick="closeModal()">Nhận Lì Xì</button>
+    <div class="modal" id="myModal">
+        <div class="modal-box">
+            <div class="modal-title" id="mTitle"></div>
+            <div class="modal-result" id="mResult"></div>
+            <div class="modal-desc" id="mDesc"></div>
+            <button class="close-btn" onclick="closePopup()">NHẬN</button>
         </div>
     </div>
 
     <script>
-        const prizes = [
-            "10.000", "20.000", "30.000", "40.000", 
-            "50.000", "60.000", "80.000", "100.000"
-        ];
+        const prizes = ["10k", "20k", "30k", "40k", "50k", "60k", "80k", "100k"];
         
-        const wishes = [
-            "Mã đáo thành công, tiền vào như nước!",
-            "Sức khỏe dồi dào, chạy khỏe như ngựa!",
-            "Năm mới phát tài, vạn sự như ý!",
-            "Công danh thăng tiến, nước đại phi xa!",
-            "Tình duyên phơi phới, hạnh phúc muôn nơi!",
-            "Hay ăn chóng béo, tiền nhiều như kẹo!",
-            "Khai xuân phú quý, cả năm bình an!",
-            "Tấn tài tấn lộc, phú quý vinh hoa!",
-            "Vững bước đường xa, thành công rực rỡ!",
-            "Tiền đầy túi, tim đầy tình!"
+        // --- BỘ QUẺ ĐẦY ĐỦ (20 Quẻ) ---
+        const fortunes = [
+            {t: "QUẺ SỐ 1 - ĐẠI CÁT", d: "Thời tới cản không kịp! Làm gì cũng thắng, mua gì cũng lời."},
+            {t: "QUẺ SỐ 2 - TÌNH DUYÊN", d: "Hồng loan tin vui. Năm nay chắc chắn có người rước hoặc có gấu."},
+            {t: "QUẺ SỐ 3 - SỰ NGHIỆP", d: "Quý nhân phù trợ. Sếp tăng lương, đồng nghiệp mời trà sữa."},
+            {t: "QUẺ SỐ 4 - TÀI LỘC", d: "Tiền vào cửa trước, vàng vào cửa sau. Cẩn thận kẻo ví chật!"},
+            {t: "QUẺ SỐ 5 - SỨC KHỎE", d: "Ăn được ngủ được là tiên. Năm nay sức khỏe vô địch thiên hạ."},
+            {t: "QUẺ SỐ 6 - TRUNG CÁT", d: "Mọi sự bình an. Cứ sống vui vẻ, may mắn tự tìm đến."},
+            {t: "QUẺ SỐ 7 - HỌC TẬP", d: "Trí tuệ minh mẫn. Học một hiểu mười, thi đâu đậu đó."},
+            {t: "QUẺ SỐ 8 - GIA ĐẠO", d: "Trong ấm ngoài êm. Gia đình hạnh phúc, tiếng cười rộn rã."},
+            {t: "QUẺ SỐ 9 - THƯỢNG CÁT", d: "Cầu được ước thấy. Dự định ấp ủ bấy lâu nay sẽ thành hiện thực."},
+            {t: "QUẺ SỐ 10 - BẠN BÈ", d: "Gặp lại cố nhân. Sắp có kèo ăn chơi nhảy múa tưng bừng."},
+            {t: "QUẺ SỐ 11 - XUẤT HÀNH", d: "Đi xa gặp may. Chuyến đi sắp tới sẽ mang lại nhiều lộc lá."},
+            {t: "QUẺ SỐ 12 - TÌNH CẢM", d: "Đào hoa nở rộ. Ra ngõ gặp người thương, vào nhà gặp người mến."},
+            {t: "QUẺ SỐ 13 - KINH DOANH", d: "Buôn may bán đắt. Khách hàng xếp hàng dài chờ chốt đơn."},
+            {t: "QUẺ SỐ 14 - CÔNG DANH", d: "Thăng quan tiến chức. Ghế cao đang đợi, chỉ cần nỗ lực thêm chút."},
+            {t: "QUẺ SỐ 15 - MAY MẮN", d: "Vận đỏ như son. Có thể trúng thưởng bất ngờ (vé số, giveaway)."},
+            {t: "QUẺ SỐ 16 - LỜI KHUYÊN", d: "Bớt nhậu nhẹt, chăm tập Gym. Body đẹp thì làm gì cũng thuận."},
+            {t: "QUẺ SỐ 17 - CẨN TRỌNG", d: "Nói ít làm nhiều. Tránh thị phi công sở, tập trung kiếm tiền."},
+            {t: "QUẺ SỐ 18 - VUI VẺ", d: "Hay ăn chóng béo. Tâm hồn ăn uống năm nay được thoả mãn tối đa."},
+            {t: "QUẺ SỐ 19 - BẤT NGỜ", d: "Một món quà lớn từ người lạ hoặc tin vui từ phương xa đang tới."},
+            {t: "QUẺ SỐ 20 - THÀNH CÔNG", d: "Mã đáo thành công. Năm Ngựa chạy nước đại về đích rực rỡ!"}
         ];
-        
-        let currentRotation = 0;
-        let isSpinning = false;
 
-        function spinWheel() {
-            if (isSpinning) return;
-            isSpinning = true;
-            
-            // Random góc quay
-            const randomDegree = Math.floor(Math.random() * 360); 
-            const totalRotation = 360 * 5 + randomDegree; 
-            
-            currentRotation += totalRotation;
-            const wheel = document.getElementById('wheel');
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
+        let isBusy = false; 
+        let currentDeg = 0;
+
+        function openTab(name) {
+            document.getElementById('tab-wheel').classList.remove('show');
+            document.getElementById('tab-fortune').classList.remove('show');
+            document.getElementById('btn-wheel').classList.remove('active');
+            document.getElementById('btn-fortune').classList.remove('active');
+
+            document.getElementById('tab-' + name).classList.add('show');
+            document.getElementById('btn-' + name).classList.add('active');
+        }
+
+        function startSpin() {
+            if (isBusy) return; isBusy = true;
+            const wheel = document.getElementById('wheelElement');
+            currentDeg += 1800 + Math.floor(Math.random() * 360);
+            wheel.style.transform = `rotate(${currentDeg}deg)`;
 
             setTimeout(() => {
-                isSpinning = false;
-                showResult(currentRotation);
+                isBusy = false;
+                const actualDeg = currentDeg % 360;
+                const slice = 360 / prizes.length;
+                const idx = Math.floor(((360 - actualDeg + (slice/2)) % 360) / slice);
+                showPopup("🧧 CHÚC MỪNG 🧧", prizes[idx] || "10k", "Lộc đầu năm, cả năm may mắn!");
             }, 4000);
         }
 
-        function showResult(rotation) {
-            const actualDeg = rotation % 360;
-            const sliceSize = 360 / prizes.length;
-            const winningIndex = Math.floor(((360 - actualDeg + (sliceSize/2)) % 360) / sliceSize);
-            const finalIndex = winningIndex >= prizes.length ? 0 : winningIndex;
-            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+        function startShake() {
+            if (isBusy) return; isBusy = true;
+            const tube = document.getElementById('tubeElement');
+            tube.classList.add('shaking');
 
-            document.getElementById('prizeResult').innerText = prizes[finalIndex] + " đ";
-            document.getElementById('wishResult').innerText = randomWish;
-            document.getElementById('resultModal').style.display = 'flex';
+            setTimeout(() => {
+                tube.classList.remove('shaking');
+                isBusy = false;
+                const item = fortunes[Math.floor(Math.random() * fortunes.length)];
+                showPopup(item.t, "", item.d);
+            }, 2000);
         }
 
-        function closeModal() {
-            document.getElementById('resultModal').style.display = 'none';
+        function showPopup(title, result, desc) {
+            document.getElementById('mTitle').innerText = title;
+            document.getElementById('mResult').innerText = result;
+            document.getElementById('mDesc').innerText = desc;
+            document.getElementById('myModal').style.display = 'flex';
         }
 
+        function closePopup() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        // --- SCRIPT TẠO HIỆU ỨNG RƠI (Đã khôi phục) ---
         function createFallingItem() {
             const item = document.createElement('div');
             item.classList.add('falling-item');
             const icons = ['🌸', '🌼', '🧧', '💰'];
             item.innerText = icons[Math.floor(Math.random() * icons.length)];
             
-            // Random vị trí và kích thước
             item.style.left = Math.random() * 100 + 'vw';
-            item.style.fontSize = (Math.random() * 15 + 15) + 'px'; // 15px - 30px
+            item.style.fontSize = (Math.random() * 15 + 15) + 'px';
             item.style.animationDuration = Math.random() * 3 + 3 + 's'; 
             
             document.body.appendChild(item);
