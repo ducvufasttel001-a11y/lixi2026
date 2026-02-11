@@ -114,14 +114,14 @@
             border-radius: 15px; text-align: center; border: 4px solid #ffd700;
         }
         .modal-title { font-size: 22px; color: #d32f2f; margin: 0 0 10px 0; font-weight: bold; }
-        .modal-result { font-size: 28px; color: #ff6f00; font-weight: bold; margin: 10px 0; }
+        .modal-result { font-size: 32px; color: #ff6f00; font-weight: bold; margin: 10px 0; }
         .modal-desc { color: #333; font-style: italic; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
         .close-btn {
             background: #d32f2f; color: #fff; padding: 10px 30px;
             border: none; border-radius: 20px; cursor: pointer; font-size: 16px;
         }
 
-        /* --- BACKGROUND & HIỆU ỨNG --- */
+        /* --- HIỆU ỨNG --- */
         .running-track {
             position: fixed; bottom: 0; left: 0;
             width: 100%; height: 60px; z-index: 1; pointer-events: none;
@@ -193,9 +193,22 @@
     </div>
 
     <script>
-        const prizes = ["10k", "20k", "30k", "40k", "50k", "60k", "80k", "100k"];
+        // --- CẤU HÌNH GIẢI THƯỞNG (8 MÓN) ---
+        const prizes = ["10k", "20k", "30k", "50k", "60k", "100k", "200k", "500k"];
         
-        // --- BỘ QUẺ ĐẦY ĐỦ (20 Quẻ) ---
+        // --- TỶ LỆ TRÚNG (Tổng = 100) ---
+        // 500k ở cuối cùng, tỷ lệ 0.0001
+        const ratios = [
+            35,      // 10k: 35%
+            30,      // 20k: 30%
+            20,      // 30k: 20%
+            10,      // 50k: 10%
+            4,       // 60k: 4%
+            0.9,     // 100k: 0.9%
+            0.0999,  // 200k: ~0.1%
+            0.0001   // 500k: 0.0001% (Siêu hiếm)
+        ];
+        
         const fortunes = [
             {t: "QUẺ SỐ 1 - ĐẠI CÁT", d: "Thời tới cản không kịp! Làm gì cũng thắng, mua gì cũng lời."},
             {t: "QUẺ SỐ 2 - TÌNH DUYÊN", d: "Hồng loan tin vui. Năm nay chắc chắn có người rước hoặc có gấu."},
@@ -232,18 +245,42 @@
             document.getElementById('btn-' + name).classList.add('active');
         }
 
+        // --- HÀM TÍNH KẾT QUẢ THEO TRỌNG SỐ ---
+        function getWeightedResult() {
+            const random = Math.random() * 100; 
+            let sum = 0;
+            for (let i = 0; i < ratios.length; i++) {
+                sum += ratios[i];
+                if (random < sum) return i; 
+            }
+            return 0; 
+        }
+
         function startSpin() {
             if (isBusy) return; isBusy = true;
+            
+            // 1. Tính trước kết quả (Hack nhẹ dựa theo tỷ lệ)
+            const winningIndex = getWeightedResult();
+            
+            // 2. Tính góc dừng
+            const sliceSize = 360 / prizes.length;
+            const stopAngle = 360 - (winningIndex * sliceSize) - (Math.random() * 20 + 10);
+            
+            const currentMod = currentDeg % 360;
+            const dist = stopAngle - currentMod + 3600; // Quay thêm 10 vòng
+            currentDeg += dist;
+
             const wheel = document.getElementById('wheelElement');
-            currentDeg += 1800 + Math.floor(Math.random() * 360);
             wheel.style.transform = `rotate(${currentDeg}deg)`;
 
             setTimeout(() => {
                 isBusy = false;
-                const actualDeg = currentDeg % 360;
-                const slice = 360 / prizes.length;
-                const idx = Math.floor(((360 - actualDeg + (slice/2)) % 360) / slice);
-                showPopup("🧧 CHÚC MỪNG 🧧", prizes[idx] || "10k", "Lộc đầu năm, cả năm may mắn!");
+                let msg = "Lộc đầu năm, cả năm may mắn!";
+                // Nếu trúng 500k thì hiện lời chúc đặc biệt
+                if(prizes[winningIndex] === "500k") {
+                    msg = "😱 WOW! BẠN ĐÃ TRÚNG JACKPOT SIÊU HIẾM!";
+                }
+                showPopup("🧧 CHÚC MỪNG 🧧", prizes[winningIndex], msg);
             }, 4000);
         }
 
@@ -271,17 +308,14 @@
             document.getElementById('myModal').style.display = 'none';
         }
 
-        // --- SCRIPT TẠO HIỆU ỨNG RƠI (Đã khôi phục) ---
         function createFallingItem() {
             const item = document.createElement('div');
             item.classList.add('falling-item');
             const icons = ['🌸', '🌼', '🧧', '💰'];
             item.innerText = icons[Math.floor(Math.random() * icons.length)];
-            
             item.style.left = Math.random() * 100 + 'vw';
             item.style.fontSize = (Math.random() * 15 + 15) + 'px';
             item.style.animationDuration = Math.random() * 3 + 3 + 's'; 
-            
             document.body.appendChild(item);
             setTimeout(() => { item.remove(); }, 6000);
         }
