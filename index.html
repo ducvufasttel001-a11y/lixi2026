@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lì Xì Năm Ngựa 2026</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #b71c1c, #6a040f);
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            text-shadow: 2px 2px 4px #000;
+            color: #ffd700;
+            margin-bottom: 20px;
+            z-index: 10;
+            text-align: center;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            /* Hiệu ứng nhấp nháy nhẹ cho tiêu đề */
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #ffd700; }
+            to { text-shadow: 0 0 20px #ff00de, 0 0 30px #ff00de; }
+        }
+
+        /* --- CÂU ĐỐI HAI BÊN --- */
+        .couplet-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+        }
+        
+        .couplet-left { left: 20px; }
+        .couplet-right { right: 20px; }
+
+        .couplet {
+            background: #d32f2f;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            padding: 15px 10px;
+            font-size: 24px;
+            font-weight: bold;
+            writing-mode: vertical-rl; /* Chữ chạy dọc */
+            text-orientation: upright;
+            letter-spacing: 5px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+            font-family: 'Times New Roman', serif;
+        }
+
+        .horse-guard {
+            font-size: 50px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+        }
+
+        /* Ẩn câu đối trên màn hình điện thoại dọc quá nhỏ để đỡ che vòng quay */
+        @media (max-width: 600px) {
+            .couplet-container { display: none; }
+        }
+
+        /* --- NGỰA CHẠY DƯỚI CHÂN --- */
+        .running-track {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .horse-runner {
+            position: absolute;
+            font-size: 40px;
+            bottom: 0;
+            animation: runAcross 8s linear infinite;
+        }
+
+        /* Ngựa thứ 2 chạy đuổi theo nhưng chậm hơn chút */
+        .horse-runner-2 {
+            position: absolute;
+            font-size: 35px;
+            bottom: 5px;
+            animation: runAcross 10s linear infinite;
+            animation-delay: 2s; /* Xuất hiện sau 2s */
+            opacity: 0.8;
+        }
+
+        @keyframes runAcross {
+            0% { left: -10%; transform: scaleX(1); } /* scaleX(1) là hướng mặt sang phải */
+            49% { left: 110%; transform: scaleX(1); }
+            50% { left: 110%; transform: scaleX(-1); } /* Lật mặt quay về */
+            100% { left: -10%; transform: scaleX(-1); }
+        }
+
+        /* --- Vòng Quay --- */
+        .wheel-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            z-index: 10;
+            margin-bottom: 20px;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #ffd700;
+            box-sizing: border-box;
+            background: conic-gradient(
+                #b71c1c 0% 12.5%, #ffc107 12.5% 25%, 
+                #b71c1c 25% 37.5%, #ffc107 37.5% 50%, 
+                #b71c1c 50% 62.5%, #ffc107 62.5% 75%, 
+                #b71c1c 75% 87.5%, #ffc107 87.5% 100%
+            );
+            transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Kim chỉ */
+        .pointer {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid #fff;
+            z-index: 20;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+        }
+
+        /* Nút quay */
+        .spin-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #fff, #ddd);
+            border-radius: 50%;
+            border: 4px solid #c62828;
+            color: #c62828;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 20;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spin-btn:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        /* --- Hiệu ứng Hoa rơi --- */
+        .falling-item {
+            position: absolute;
+            top: -10%;
+            font-size: 24px;
+            user-select: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Popup Kết quả --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: #c62828;
+            border: 4px solid #ffd700;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 320px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        .modal h2 { margin-top: 0; font-size: 28px; }
+        .prize-text { font-size: 45px; font-weight: bold; margin: 15px 0; color: #ff6f00; }
+        .wish-text { font-size: 18px; font-style: italic; color: #555; margin-bottom: 25px; }
+        .close-btn {
+            padding: 10px 25px;
+            background: #c62828;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .close-btn:hover { background: #b71c1c; }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🐎 TẾT BÍNH NGỌ 2026 🐎</h1>
+
+    <div class="couplet-container couplet-left">
+        <div class="horse-guard">🐴</div>
+        <div class="couplet">
+            MÃ<br>ĐÁO<br>THÀNH<br>CÔNG
+        </div>
+    </div>
+
+    <div class="couplet-container couplet-right">
+        <div class="horse-guard">🦄</div>
+        <div class="couplet">
+            TẤN<br>TÀI<br>TẤN<br>LỘC
+        </div>
+    </div>
+
+    <div class="wheel-container">
+        <div class="pointer"></div>
+        <div class="wheel" id="wheel"></div>
+        <button class="spin-btn" onclick="spinWheel()">QUAY</button>
+    </div>
+
+    <div class="running-track">
+        <div class="horse-runner">🐎</div>
+        <div class="horse-runner-2">🐎</div>
+    </div>
+
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2>🎉 CHÚC MỪNG 🎉</h2>
+            <div id="prizeResult" class="prize-text"></div>
+            <div id="wishResult" class="wish-text"></div>
+            <button class="close-btn" onclick="closeModal()">Nhận Lì Xì</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CẤU HÌNH GIẢI THƯỞNG & LỜI CHÚC ---
+        const prizes = [
+            "10.000", "20.000", "30.000", "40.000", 
+            "50.000", "60.000", "80.000", "100.000"
+        ];
+        
+        const wishes = [
+            "Mã đáo thành công, tiền vào như nước!",
+            "Sức khỏe dồi dào, chạy khỏe như ngựa!",
+            "Năm mới phát tài, vạn sự như ý!",
+            "Công danh thăng tiến, nước đại phi xa!",
+            "Tình duyên phơi phới, hạnh phúc muôn nơi!",
+            "Hay ăn chóng béo, tiền nhiều như kẹo!",
+            "Khai xuân phú quý, cả năm bình an!",
+            "Tấn tài tấn lộc, phú quý vinh hoa!",
+            "Vững bước đường xa, thành công rực rỡ!",
+            "Tiền đầy túi, tim đầy tình!"
+        ];
+        
+        let currentRotation = 0;
+        let isSpinning = false;
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            
+            // Xoay ít nhất 5 vòng + random
+            const randomDegree = Math.floor(Math.random() * 360); 
+            const totalRotation = 360 * 5 + randomDegree; 
+            
+            currentRotation += totalRotation;
+            const wheel = document.getElementById('wheel');
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+            setTimeout(() => {
+                isSpinning = false;
+                showResult(currentRotation);
+            }, 4000);
+        }
+
+        function showResult(rotation) {
+            const actualDeg = rotation % 360;
+            const sliceSize = 360 / prizes.length;
+            const winningIndex = Math.floor(((360 - actualDeg + (sliceSize/2)) % 360) / sliceSize);
+            const finalIndex = winningIndex >= prizes.length ? 0 : winningIndex;
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+
+            document.getElementById('prizeResult').innerText = prizes[finalIndex] + " đ";
+            document.getElementById('wishResult').innerText = randomWish;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+        }
+
+        // --- Hiệu ứng hoa rơi ---
+        function createFallingItem() {
+            const item = document.createElement('div');
+            item.classList.add('falling-item');
+            const icons = ['🌸', '🌼', '🧧', '💰'];
+            item.innerText = icons[Math.floor(Math.random() * icons.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = Math.random() * 3 + 3 + 's'; 
+            document.body.appendChild(item);
+            setTimeout(() => { item.remove(); }, 6000);
+        }
+        setInterval(createFallingItem, 500); 
+    </script>
+</body>
+</html>
